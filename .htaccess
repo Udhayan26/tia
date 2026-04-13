@@ -1,4 +1,5 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    # This sends all traffic directly to the Laravel public folder
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>

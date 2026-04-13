@@ -1,4 +1,22 @@
-- name: Sync to FTP
+name: Push to Server
+on:
+  push:
+    branches: [ main ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install Dependencies
+        run: composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+
+      - name: Sync to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -6,4 +24,4 @@
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
           server-dir: ./
-          dangerous-clean-slate: false # Prevents deleting your 'includes' folder
+          state-name: ftp-deploy-sync-state.json # Tracks uploaded files to save time

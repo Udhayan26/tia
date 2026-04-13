@@ -5,4 +5,5 @@
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: ./
+          server-dir: ./insdb2/
+          state-name: .github-ftp-deploy-sync-state.json

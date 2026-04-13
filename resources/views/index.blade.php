@@ -1,19 +1,15 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div id="div1-dashboard"></div>
-    <div id="div2-locations"></div>
-    </div>
-
-<script>
-    function loadSection(section) {
-        $.ajax({
-            url: '/' + section,
-            success: function(data) {
-                $('#div2-locations').html(data);
-            }
-        });
-    }
-</script>
-@endsection
+function loadSection(section) {
+    const baseUrl = "{{ url('/api') }}"; // Automatically becomes http://insdb2.udhayam.in/api
+    
+    $.ajax({
+        url: `${baseUrl}/${section}`,
+        method: 'GET',
+        success: function(response) {
+            // Load into the specific div based on your 6-div structure
+            $(`#div-${section}`).html(response);
+        },
+        error: function() {
+            console.error("Failed to load " + section);
+        }
+    });
+}

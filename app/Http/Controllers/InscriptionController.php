@@ -1,17 +1,17 @@
+<?php
 namespace App\Http\Controllers;
-use App\Models\Tnarch;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InscriptionController extends Controller {
     public function index() {
-        return view('index'); // Points to resources/views/index.blade.php
+        return view('index');
     }
 
-    public function dashboard() {
+    public function getDashboard() {
         $stats = [
-            'total' => Tnarch::count(),
-            'dynasties' => Tnarch::select('dynasty_ta', DB::raw('count(*) as total'))
-                            ->groupBy('dynasty_ta')->get()
+            'total_inscriptions' => DB::table('tnarchs01')->count(),
+            'total_villages' => DB::table('locations')->distinct('village_ta')->count()
         ];
         return response()->json($stats);
     }
